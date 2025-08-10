@@ -1,0 +1,2 @@
+add-symbol-file ./vmlinux
+add-symbol-file ./xxxx.ko -o 0xffffffffc0000000
