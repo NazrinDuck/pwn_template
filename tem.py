@@ -5,7 +5,9 @@ from ctypes import *
 # from pwnlib.fmtstr import make_atoms_simple
 
 context(arch="amd64", os="linux", log_level="debug")
-context.terminal = ["tmux", "split", "-h"]
+# Now no need tmux !
+# context.terminal = ["tmux", "split", "-h"]
+context.terminal = ["kitty"]
 binary_path = "./"
 libc_path = "/home/NazrinDuck/glibc-all-in-one/libs/2.23-0ubuntu3_amd64/libc-2.23.so"
 ld_path = "/home/NazrinDuck/glibc-all-in-one/libs/2.23-0ubuntu3_amd64/ld-2.23.so"

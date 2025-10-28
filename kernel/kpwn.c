@@ -36,15 +36,15 @@ void (*commit_creds)(void *) KERNCALL;
 
 uint64_t user_cs, user_ss, user_rflags, user_sp;
 uint64_t kernel_base, canary;
-size_t page_size;
+uint64_t page_size;
 
-void dump_hex(const char *restrict hex, size_t len) {
-  size_t i = 0, cnt = 0;
-  size_t res = len % 0x10;
-  size_t append = res != 0;
+void dump_hex(const char *restrict hex, uint64_t len) {
+  uint64_t i = 0, cnt = 0;
+  uint64_t res = len % 0x10;
+  uint64_t append = res != 0;
 
-  size_t times = len / 0x10 + append;
-  size_t __len = (len & (~0xf)) + (append << 4);
+  uint64_t times = len / 0x10 + append;
+  uint64_t __len = (len & (~0xf)) + (append << 4);
 
   char *str = (char *)malloc(__len);
   char *__hex = (char *)malloc(__len);
@@ -462,4 +462,13 @@ void adjust_rlimit() {
       err_exit("setrlimit");
     }
   }
+}
+
+/*
+ * pipe
+ */
+
+// argument `size` stands for bytes
+int resize_pipe(int pipe_fd, uint64_t size) {
+  return fcntl(pipe_fd, F_SETPIPE_SZ, 0x1000 * (size / 0x8));
 }

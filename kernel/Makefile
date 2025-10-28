@@ -13,9 +13,9 @@ ifndef ROOTFS
 	ROOTFS := rootfs_d.cpio
 endif
 
-all: extract/exp
-release: extract/exp
-debug: extract/debug
+all: extract/exp $(ROOTFS)
+release: extract/exp $(ROOTFS)
+debug: extract/debug $(ROOTFS)
 
 extract/debug: exp.c kpwn.c
 	@mkdir -p extract
@@ -30,7 +30,7 @@ extract/exp: exp.c kpwn.c
 	$(UPX) $@
 	$(CP) $@ .
 
-$(ROOTFS): $(wildcard extract/*)
+$(ROOTFS): exp.c kpwn.c $(wildcard extract/*)
 	cd ./extract || exit 1 && find . | cpio -o --format=newc >../$@
 
 .PHONY: release all debug
